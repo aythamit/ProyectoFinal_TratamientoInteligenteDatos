@@ -76,6 +76,23 @@ class FullData
     file = File.open(filename, 'w')
     file.puts "@relation paro.symbolic\n\n"
 
+
+
+    # Etudios
+    es = "@attribute estudios {"
+    studies.each_with_index.map { |e, i|
+      es += e
+      if (i != studies.size - 1)
+        es += ", "
+      end
+    }
+    es += "}"
+    #file.puts es
+
+    file.puts "@attribute año {2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009}"
+    file.puts "@attribute mes {Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre}"
+    file.puts "@attribute sexo {hombre, mujer}"
+    file.puts "@attribute edad {mayor_25, menor_25}"
     # Sector
     acv = "@attribute sector {"
     activities.each_with_index.map { |e, i|
@@ -87,21 +104,7 @@ class FullData
     acv += "}"
     file.puts acv
 
-    # Etudios
-    es = "@attribute estudios {"
-    studies.each_with_index.map { |e, i|
-      es += e
-      if (i != studies.size - 1)
-        es += ", "
-      end
-    }
-    es += "}"
-    file.puts es
-
-    file.puts "@attribute edad {mayor_25, menor_25}"
-    file.puts "@attribute sexo {hombre, mujer}"
-    file.puts "@attribute mes {enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre}"
-    file.puts "@attribute año {2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009}"
+    file.puts "@attribute paro {si, no}"
 
     file.puts "\n\n"
     file.puts "@data\n"
@@ -111,23 +114,24 @@ class FullData
       content = ""
       element.activities.each_with_index.map { |act, i|
 
+        #{act.women.lower_25}
         content += "#{element.date},"
-        content += "mujer,menor_25,#{act.women.lower_25} #{activities[i]}"
+        content += "mujer,menor_25,#{activities[i]},si"
         content += "\n"
 
         content += "#{element.date},"
-        content += "mujer,mayor_25,#{act.women.greater_25} #{activities[i]}"
+        content += "mujer,mayor_25,#{activities[i]},si"
         content += "\n"
 
         content += "#{element.date},"
-        content += "hombre,menor_25,#{act.men.lower_25} #{activities[i]}"
+        content += "hombre,menor_25,#{activities[i]},si"
         content += "\n"
 
         content += "#{element.date},"
-        content += "hombre,mayor_25,#{act.men.greater_25} #{activities[i]}"
+        content += "hombre,mayor_25,#{activities[i]},si"
         content += "\n"
 
-        content += "\n"
+
 
       }
       file.puts content
@@ -140,14 +144,14 @@ end
 def parse_activities line, full
   line = line.split(',')
   line.map { |e|
-    full.activities << e.delete("\"")
+    full.activities << e.delete("\"").split(' ').join('_')
   }
 end
 
 def parse_studies line, full
   line = line.split(',')
   line.map { |e|
-    full.studies << e.delete("\"")
+    full.studies << e.delete("\"").split(' ').join('_')
   }
 end
 
