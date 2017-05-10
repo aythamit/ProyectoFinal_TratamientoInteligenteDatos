@@ -2,7 +2,11 @@ class Date
   attr_reader :year, :month
   def initialize (y, m)
     @year = y.to_i
-    @month = m
+    @month = m.delete ("\"")
+  end
+
+  def to_s
+    "#{@year},#{@month}"
   end
 end
 
@@ -43,6 +47,7 @@ class Row
     @date = date
     @total_population = total_population
   end
+
 end
 
 
@@ -64,26 +69,92 @@ class FullData
     puts size
     size
   end
+
+
+  def create_file
+    filename = "values.arff"
+    file = File.open(filename, 'w')
+    file.puts "@relation paro.symbolic\n\n"
+
+    # Sector
+    acv = "@attribute sector {"
+    activities.each_with_index.map { |e, i|
+      acv += e
+      if (i != activities.size - 1)
+        acv += ", "
+      end
+    }
+    acv += "}"
+    file.puts acv
+
+    # Etudios
+    es = "@attribute estudios {"
+    studies.each_with_index.map { |e, i|
+      es += e
+      if (i != studies.size - 1)
+        es += ", "
+      end
+    }
+    es += "}"
+    file.puts es
+
+    file.puts "@attribute edad {mayor_25, menor_25}"
+    file.puts "@attribute sexo {hombre, mujer}"
+    file.puts "@attribute mes {enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre}"
+    file.puts "@attribute año {2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009}"
+
+    file.puts "\n\n"
+    file.puts "@data\n"
+
+
+    content.map { |element|
+      content = ""
+      element.activities.each_with_index.map { |act, i|
+
+        content += "#{element.date},"
+        content += "mujer,menor_25,#{act.women.lower_25} #{activities[i]}"
+        content += "\n"
+
+        content += "#{element.date},"
+        content += "mujer,mayor_25,#{act.women.greater_25} #{activities[i]}"
+        content += "\n"
+
+        content += "#{element.date},"
+        content += "hombre,menor_25,#{act.men.lower_25} #{activities[i]}"
+        content += "\n"
+
+        content += "#{element.date},"
+        content += "hombre,mayor_25,#{act.men.greater_25} #{activities[i]}"
+        content += "\n"
+
+        content += "\n"
+
+      }
+      file.puts content
+    }
+
+  end
+
 end
 
 def parse_activities line, full
   line = line.split(',')
   line.map { |e|
-    full.activities << e
+    full.activities << e.delete("\"")
   }
 end
 
 def parse_studies line, full
   line = line.split(',')
   line.map { |e|
-    full.studies << e
+    full.studies << e.delete("\"")
   }
 end
 
 def parse_ages line, full
   line = line.split(',')
   line.map { |e|
-    full.ages << e
+    full.ages << e.delete("\"")
   }
 end
 
@@ -165,7 +236,7 @@ module FileTid
        parse_regular_line file.readline, data
     end
 
-
+    data.create_file
 
   else
     puts "No se pudo abrir el archivo"
