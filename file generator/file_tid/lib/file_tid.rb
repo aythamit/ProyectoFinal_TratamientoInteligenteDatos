@@ -1,25 +1,14 @@
 class Date
   attr_reader :year, :month
-  @year
-  @month
   def initialize (y, m)
     @year = y.to_i
     @month = m
   end
 end
 
-class Studies
-  @studies = []
-  def initialize (studies)
-    @studies = studies
-  end
-
-end
 
 class Population
   attr_accessor :women, :men
-  @women
-  @men
   def initialize m, w
     @women = w.to_i
     @men = m.to_i
@@ -32,8 +21,6 @@ end
 
 class Age
   attr_accessor :greater_25, :lower_25
-  @greater_25
-  @lower_25
   def initialize l, g
     @lower_25 = l.to_i
     @greater_25 = g.to_i
@@ -48,8 +35,6 @@ class Row
   end
   @date
   @total_population
-  @activities
-  @studies
 end
 
 
@@ -60,13 +45,17 @@ class FullData
     @activities = []
     @studies = []
     @ages = []
+    @content = []
   end
-  @activities
-  @studies
-  @ages
 
-  @translator
-  @content = []
+  def get_total_population
+    size = 0
+    content.map { |e|
+      size += e.total_population.get_total
+    }
+    puts size
+    size
+  end
 end
 
 def parse_activities line, full
@@ -119,10 +108,12 @@ def parse_regular_line line, full
   #puts "#{line[index]}"
   age = Age.new line[index], line[index + 1]
 
-  if (row.total_population.get_total.to_i == line[index + 2].to_i)
+  if (row.total_population.get_total == line[index + 2].to_i)
     puts "Correcto"
+    full.content << row
   else
     puts "Fallo, #{row.total_population.get_total} != #{line[index + 2]}"
+    puts line [0] + " " + line[1]
   end
 
 end
@@ -141,6 +132,9 @@ module FileTid
     while !file.eof?
        parse_regular_line file.readline, data
     end
+
+    data.get_total_population
+
   else
     puts "No se pudo abrir el archivo"
   end
