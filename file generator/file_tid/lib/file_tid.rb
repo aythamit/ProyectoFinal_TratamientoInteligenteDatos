@@ -3,7 +3,7 @@ class Date
   @year
   @month
   def initialize (y, m)
-    @year = y
+    @year = y.to_i
     @month = m
   end
 end
@@ -14,23 +14,19 @@ class Studies
     @studies = studies
   end
 
-  def get_study_at (n)
-    @studies[n]
-  end
-
 end
 
 class Population
-  attr_accessor :woman, :men
+  attr_accessor :women, :men
   @women
   @men
-  def initialize w, m
-    @woman = w
-    @men = m
+  def initialize m, w
+    @women = w.to_i
+    @men = m.to_i
   end
 
   def get_total
-    @woman + @men
+    @women + @men
   end
 end
 
@@ -39,17 +35,21 @@ class Age
   @greater_25
   @lower_25
   def initialize l, g
-    @lower_25 = l
-    @greater_25 = g
+    @lower_25 = l.to_i
+    @greater_25 = g.to_i
   end
 end
 
 class Row
   attr_accessor :date, :total, :total_population, :activities, :studies
+  def initialize
+    @activities = []
+    @studies = []
+  end
   @date
   @total_population
-  @activities = []
-  @studies = []
+  @activities
+  @studies
 end
 
 
@@ -94,7 +94,37 @@ def parse_regular_line line, full
   line = line.split(',')
   row = Row.new
   row.date = Date.new line[0], line[1]
+  # Población total
   row.total_population = Population.new line[2], line[3]
+
+  index = 4
+  # Actividades
+  full.activities.each_with_index.map { |e, i|
+    #puts "#{e} #{line[index + i * 2]} #{line[index + i * 2 + 1]}"
+    pop = Population.new line[index + i * 2], line[index + i * 2 + 1]
+    row.activities << pop
+  }
+
+  index = 4 + full.activities.size * 2
+
+  # Nivel de estudios
+  full.studies.each_with_index.map { |e, i|
+    #puts "#{i + index} #{line[i + index]} #{e}"
+    row.studies << line[i]
+  }
+
+  index += full.studies.size
+
+  # Edad
+  #puts "#{line[index]}"
+  age = Age.new line[index], line[index + 1]
+
+  if (row.total_population.get_total.to_i == line[index + 2].to_i)
+    puts "Correcto"
+  else
+    puts "Fallo, #{row.total_population.get_total} != #{line[index + 2]}"
+  end
+
 end
 
 module FileTid
