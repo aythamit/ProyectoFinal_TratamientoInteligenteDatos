@@ -6,7 +6,6 @@ class Date
   end
 end
 
-
 class Population
   attr_accessor :women, :men
   def initialize m, w
@@ -15,7 +14,12 @@ class Population
   end
 
   def get_total
-    @women + @men
+    if (@women.is_a? Integer and @men.is_a? Integer)
+      @women + @men
+    else
+      @women.get_total + @men.get_total
+    end
+
   end
 end
 
@@ -25,16 +29,20 @@ class Age
     @lower_25 = l.to_i
     @greater_25 = g.to_i
   end
+
+  def get_total
+    @lower_25 + @greater_25
+  end
 end
 
 class Row
-  attr_accessor :date, :total, :total_population, :activities, :studies
-  def initialize
-    @activities = []
-    @studies = []
+  attr_accessor :date, :total_population, :activities, :studies
+  def initialize date, total_population, activities, studies
+    @activities = activities
+    @studies = studies
+    @date = date
+    @total_population = total_population
   end
-  @date
-  @total_population
 end
 
 
@@ -81,33 +89,57 @@ end
 
 def parse_regular_line line, full
   line = line.split(',')
-  row = Row.new
-  row.date = Date.new line[0], line[1]
+
+  date = Date.new line[0], line[1]
   # Población total
-  row.total_population = Population.new line[2], line[3]
+  total_population = Population.new line[2], line[3]
 
   index = 4
+  activities = []
+
   # Actividades
   full.activities.each_with_index.map { |e, i|
     #puts "#{e} #{line[index + i * 2]} #{line[index + i * 2 + 1]}"
     pop = Population.new line[index + i * 2], line[index + i * 2 + 1]
-    row.activities << pop
+    activities << pop
   }
 
   index = 4 + full.activities.size * 2
+  studies = []
 
   # Nivel de estudios
   full.studies.each_with_index.map { |e, i|
     #puts "#{i + index} #{line[i + index]} #{e}"
-    row.studies << line[i]
+    studies << line[i]
   }
 
   index += full.studies.size
 
   # Edad
-  #puts "#{line[index]}"
+  #puts "#{line[index]} #{line[index + 1]}"
   age = Age.new line[index], line[index + 1]
 
+
+  # calcula los porcentajes de mujeres y hombres mayores y menos de 25 años
+  activities.map { |e|
+
+    total_men = total_population.men
+    total_women = total_population.women
+
+    percent_gr_25 = age.greater_25.to_f / total_population.get_total.to_f
+    percent_ls_25 = age.lower_25.to_f / total_population.get_total.to_f
+
+    women_gr = e.women.to_f * percent_gr_25
+    women_ls = e.women.to_f * percent_ls_25
+    men_gr = e.men.to_f * percent_gr_25
+    men_ls = e.men.to_f * percent_ls_25
+
+    e.women   = Age.new women_gr.to_i, women_ls.to_i
+    e.men     = Age.new men_gr.to_i, men_ls.to_i
+  }
+
+
+  row = Row.new date, total_population, activities, studies
   if (row.total_population.get_total == line[index + 2].to_i)
     puts "Correcto"
     full.content << row
@@ -133,7 +165,7 @@ module FileTid
        parse_regular_line file.readline, data
     end
 
-    data.get_total_population
+
 
   else
     puts "No se pudo abrir el archivo"
