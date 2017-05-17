@@ -17,6 +17,7 @@ public class VentanaResultado extends JFrame {
 		setSize(250,100);
 		setVisible(true);
 		setResizable(false);
+		setLocationRelativeTo(null);
 		setTitle("Resultado");
 		
 	}

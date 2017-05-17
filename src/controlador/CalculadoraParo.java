@@ -20,7 +20,7 @@ public class CalculadoraParo {
 	public static void calcular(String anio ,String mes, String sexo, String edad, String sector, String estudio) throws Exception {
 		
 		creaFichero(anio, mes, sexo, edad, sector, estudio);
-		System.out.println("Fichero creado");
+		//System.out.println("Fichero creado");
 		calculador();
 		
 	}
@@ -46,7 +46,7 @@ public class CalculadoraParo {
 			
 			fichero = new FileWriter("resultado.arff");
 			bw = new BufferedWriter(fichero); 
-			System.out.println(cabecera);
+			//System.out.println(cabecera);
 			bw.write(cabecera);
 			
 			bw.close();

@@ -30,12 +30,12 @@ public class VentanaPrincipal extends JFrame{
 		setTitle("Proyecto TID - Calcula Paro");
 		getContentPane().setLayout(null);
 		panelPrincipal.setLayout(null);
-		panelPrincipal.setSize(494, 321);
+		panelPrincipal.setSize(494, 356);
 		panelPrincipal.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(),"Formulario"));
 		
 		JLabel lblSexo = new JLabel("Sexo");
 		lblSexo.setFont(new Font("Source Sans Pro", Font.PLAIN, 17));
-		lblSexo.setBounds(35, 43, 38, 14);
+		lblSexo.setBounds(35, 43, 55, 14);
 		panelPrincipal.add(lblSexo);
 		
 		JLabel lblSector = new JLabel("Sector Profesional");
@@ -48,7 +48,7 @@ public class VentanaPrincipal extends JFrame{
 		lblEstudios.setBounds(34, 129, 94, 14);
 		panelPrincipal.add(lblEstudios);
 		
-		JLabel lblTrimestre = new JLabel("Trimestre");
+		JLabel lblTrimestre = new JLabel("Mes");
 		lblTrimestre.setFont(new Font("Source Sans Pro", Font.PLAIN, 17));
 		lblTrimestre.setBounds(34, 171, 87, 14);
 		panelPrincipal.add(lblTrimestre);
@@ -59,12 +59,12 @@ public class VentanaPrincipal extends JFrame{
 		panelPrincipal.add(comboSexo);
 		
 		JComboBox comboSector = new JComboBox();
-		comboSector.setModel(new DefaultComboBoxModel(new String[] {"Actividades_administrativas_y_servicios_auxiliares", "Actividades art\u00EDsticas recreativas y de entretenimiento", "Actividades de los hogares como empleadores de personal dom\u00E9stico", "Actividades de organizaciones y organismos extraterritoriales", "Actividades financieras y de seguros", "Actividades inmobiliarias", "Actividades profesionales, cient\u00EDficas y t\u00E9cnicas", "Actividades sanitarias y de servicios sociales", "Administraci\u00F3n p\u00FAblica y defensa; seguridad social obligatoria", "Agricultura, ganader\u00EDa, silvicultura y pesca", "Comercio al por mayores y al por menores; reparaci\u00F3n de veh\u00EDculos de motor y motocicletas", "Construcci\u00F3n", "Educaci\u00F3n", "Hosteler\u00EDa", "Industria manufacturera", "Industrias extractivas", "Informaci\u00F3n y comunicaciones", "Otros servicios", "Sin actividad econ\u00F3mica", "Suministros de agua, actividades de saneamiento gesti\u00F3n de residuos y descontaminaci\u00F3n", "Suministros de energ\u00EDa el\u00E9ctrica, gas, vapor y aire acondicionado", "Transporte y almacenamiento"}));
+		comboSector.setModel(new DefaultComboBoxModel(new String[] {"Actividades_administrativas_y_servicios_auxiliares,", "Actividades_artísticas_recreativas_y_de_entretenimiento", "Actividades_de_los_hogares_como_empleadores_de_personal_doméstico", "Actividades_de_organizaciones_y_organismos_extraterritoriales", "Actividades_financieras_y_de_seguros, Actividades_inmobiliarias", "Actividades_profesionales_científicas_y_técnicas", "Actividades_sanitarias_y_de_servicios_sociales", "Administración_pública_y_defensa;_seguridad_social_obligatoria", "Agricultura_ganadería_silvicultura_y_pesca", "Comercio_al_por_mayores_y_al_por_menores;_reparación_de_vehículos_de_motor_y_motocicletas", "Construcción", "Educación", "Hostelería", "Industria_manufacturera", "Industrias_extractivas", "Información_y_comunicaciones", "Otros_servicios", "Sin_actividad_económica", "Suministros_de_agua_actividades_de_saneamiento_gestión_de_residuos_y_descontaminación", "Suministros_de_energía_eléctrica_gas_vapor_y_aire_acondicionado", "Transporte_y_almacenamiento"}));
 		comboSector.setBounds(196, 82, 263, 20);
 		panelPrincipal.add(comboSector);
 		
 		JComboBox comboEstudios = new JComboBox();
-		comboEstudios.setModel(new DefaultComboBoxModel(new String[] {"Analfabetos", "Educacion Primaria", "Educacion Secundaria", "Estudios Universitarios", "Formacion Profesional"}));
+		comboEstudios.setModel(new DefaultComboBoxModel(new String[] {"Analfabetos", "Primaria", "Secundaria", "Universitario", "FP"}));
 		comboEstudios.setBounds(196, 126, 263, 20);
 		panelPrincipal.add(comboEstudios);
 		
@@ -75,10 +75,16 @@ public class VentanaPrincipal extends JFrame{
 		
 		JComboBox comboEdad = new JComboBox();
 		comboEdad.setModel(new DefaultComboBoxModel(new String[] {"menor_25","mayor_25"}));
-		comboEdad.setBounds(196, 126, 263, 20);
+		comboEdad.setBounds(196, 250, 263, 20);
+		panelPrincipal.add(comboEdad);
+		
+		JComboBox comboAnio = new JComboBox();
+		comboAnio.setModel(new DefaultComboBoxModel(new String[] {"2017"}));
+		comboAnio.setBounds(197, 210, 263, 20);
+		panelPrincipal.add(comboAnio);
 		
 		JButton btnCalcular = new JButton("Calcular");
-		btnCalcular.setBounds(140, 224, 150, 48);
+		btnCalcular.setBounds(159, 296, 150, 48);
 		panelPrincipal.add(btnCalcular);
 		
 		btnCalcular.addActionListener( new ActionListener(){
@@ -88,7 +94,7 @@ public class VentanaPrincipal extends JFrame{
 				// TODO Auto-generated method stub
 				//2017,Junio,hombre,mayor_25,Construcción,Universitario,no
 				try {
-					CalculadoraParo.calcular( "2017", comboMes.getSelectedItem().toString() ,comboSexo.getSelectedItem().toString(),
+					CalculadoraParo.calcular( comboAnio.getSelectedItem().toString(), comboMes.getSelectedItem().toString() ,comboSexo.getSelectedItem().toString(),
 							comboEdad.getSelectedItem().toString(), 
 							comboSector.getSelectedItem().toString(),
 							comboEstudios.getSelectedItem().toString());
@@ -101,9 +107,21 @@ public class VentanaPrincipal extends JFrame{
 		});
 		
 		getContentPane().add(panelPrincipal);
-		setSize(500,320);
+		
+		
+		JLabel lblAo = new JLabel("Año");
+		lblAo.setFont(new Font("Dialog", Font.PLAIN, 17));
+		lblAo.setBounds(35, 213, 87, 14);
+		panelPrincipal.add(lblAo);
+		
+		JLabel lblEdad = new JLabel("Edad");
+		lblEdad.setFont(new Font("Dialog", Font.PLAIN, 17));
+		lblEdad.setBounds(35, 253, 70, 15);
+		panelPrincipal.add(lblEdad);
+		setSize(500,400);
 		setVisible(true);
 		setResizable(false);
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 }
