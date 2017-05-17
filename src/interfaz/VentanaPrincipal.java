@@ -110,12 +110,12 @@ public class VentanaPrincipal extends JFrame{
 		
 		
 		JLabel lblAo = new JLabel("Año");
-		lblAo.setFont(new Font("Dialog", Font.PLAIN, 17));
+		lblAo.setFont(new Font("Source Sans Pro", Font.PLAIN, 17));
 		lblAo.setBounds(35, 213, 87, 14);
 		panelPrincipal.add(lblAo);
 		
 		JLabel lblEdad = new JLabel("Edad");
-		lblEdad.setFont(new Font("Dialog", Font.PLAIN, 17));
+		lblEdad.setFont(new Font("Source Sans Pro", Font.PLAIN, 17));
 		lblEdad.setBounds(35, 253, 70, 15);
 		panelPrincipal.add(lblEdad);
 		setSize(500,400);

@@ -8,8 +8,10 @@ public class VentanaResultado extends JFrame {
 	public VentanaResultado(String resultado) {
 		
 		initVentana();
+		getContentPane().setLayout(null);
 		JLabel result = new JLabel(resultado);
-		add(result);
+		result.setBounds(50, 0, 244, 71);
+		getContentPane().add(result);
 	}
 
 	private void initVentana() {

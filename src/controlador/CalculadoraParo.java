@@ -70,8 +70,7 @@ public class CalculadoraParo {
 		Instances test  = new Instances(reader);
 		reader.close();
 		train.setClassIndex(train.numAttributes() - 1);
-		test.setClassIndex(train.numAttributes() - 1);
-		//System.out.println(train.attribute(train.numAttributes() - 1));
+		test.setClassIndex(test.numAttributes() - 1);
 		
 		
 		Classifier cls = new J48();
@@ -80,9 +79,9 @@ public class CalculadoraParo {
 		Evaluation eval = new Evaluation(train);
 		eval.evaluateModel(cls, test);
 		if(eval.pctCorrect() == 100.0)
-			new VentanaResultado("No vas a estar en paro.");
+			new VentanaResultado("Probablemente, no vas a estar en paro.");
 		else
-			new VentanaResultado("Lo siento bro, aun no sales.");
+			new VentanaResultado("Probablemente aun estes en el paro.");
 		
 	}
 
