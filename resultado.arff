@@ -1,13 +1,13 @@
 @relation paro.symbolic 
 
-@attribute a帽o {2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009}
+@attribute a駉 {2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009}
 @attribute mes {Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre}
 @attribute sexo {hombre, mujer}
 @attribute edad {mayor_25, menor_25}
-@attribute sector {Actividades_administrativas_y_servicios_auxiliares, Actividades_art铆sticas_recreativas_y_de_entretenimiento, Actividades_de_los_hogares_como_empleadores_de_personal_dom茅stico, Actividades_de_organizaciones_y_organismos_extraterritoriales, Actividades_financieras_y_de_seguros, Actividades_inmobiliarias, Actividades_profesionales_cient铆ficas_y_t茅cnicas, Actividades_sanitarias_y_de_servicios_sociales, Administraci贸n_p煤blica_y_defensa;_seguridad_social_obligatoria, Agricultura_ganader铆a_silvicultura_y_pesca, Comercio_al_por_mayores_y_al_por_menores;_reparaci贸n_de_veh铆culos_de_motor_y_motocicletas, Construcci贸n, Educaci贸n, Hosteler铆a, Industria_manufacturera, Industrias_extractivas, Informaci贸n_y_comunicaciones, Otros_servicios, Sin_actividad_econ贸mica, Suministros_de_agua_actividades_de_saneamiento_gesti贸n_de_residuos_y_descontaminaci贸n, Suministros_de_energ铆a_el茅ctrica_gas_vapor_y_aire_acondicionado, Transporte_y_almacenamiento} 
+@attribute sector {Actividades_administrativas_y_servicios_auxiliares, Actividades_art韘ticas_recreativas_y_de_entretenimiento, Actividades_de_los_hogares_como_empleadores_de_personal_dom閟tico, Actividades_de_organizaciones_y_organismos_extraterritoriales, Actividades_financieras_y_de_seguros, Actividades_inmobiliarias, Actividades_profesionales_cient韋icas_y_t閏nicas, Actividades_sanitarias_y_de_servicios_sociales, Administraci髇_p鷅lica_y_defensa;_seguridad_social_obligatoria, Agricultura_ganader韆_silvicultura_y_pesca, Comercio_al_por_mayores_y_al_por_menores;_reparaci髇_de_veh韈ulos_de_motor_y_motocicletas, Construcci髇, Educaci髇, Hosteler韆, Industria_manufacturera, Industrias_extractivas, Informaci髇_y_comunicaciones, Otros_servicios, Sin_actividad_econ髆ica, Suministros_de_agua_actividades_de_saneamiento_gesti髇_de_residuos_y_descontaminaci髇, Suministros_de_energ韆_el閏trica_gas_vapor_y_aire_acondicionado, Transporte_y_almacenamiento} 
 @attribute estudios {Analfabetos, Primaria, Secundaria, Universitario, FP}
 @attribute paro {si, no}
 
 
 @data
-2017,Abril,hombre,menor_25,Actividades_administrativas_y_servicios_auxiliares,,Analfabetos,no
+2017,Enero,hombre,menor_25,Actividades_administrativas_y_servicios_auxiliares,,Analfabetos,no

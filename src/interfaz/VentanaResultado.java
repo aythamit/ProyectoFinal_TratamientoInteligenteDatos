@@ -10,13 +10,13 @@ public class VentanaResultado extends JFrame {
 		initVentana();
 		getContentPane().setLayout(null);
 		JLabel result = new JLabel(resultado);
-		result.setBounds(50, 0, 244, 71);
+		result.setBounds(10, 0, 244, 71);
 		getContentPane().add(result);
 	}
 
 	private void initVentana() {
 		
-		setSize(250,100);
+		setSize(300,100);
 		setVisible(true);
 		setResizable(false);
 		setLocationRelativeTo(null);
